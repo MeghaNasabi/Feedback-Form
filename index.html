@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body style="background:yellow;text-align:center">
+
+<h2>Feedback Form</h2>
+
+<div id="form">
+<input id="name" placeholder="Enter Name"><br><br>
+<input id="email" placeholder="Enter Email"><br><br>
+<textarea id="feed" placeholder="Enter Feedback"></textarea><br><br>
+<button onclick="submitForm()">Submit</button>
+</div>
+
+<div id="display" style="display:none">
+<h2>Feedback Submitted</h2>
+<p id="result"></p>
+</div>
+
+<script>
+function submitForm(){
+let n=document.getElementById("name").value;
+let e=document.getElementById("email").value;
+let f=document.getElementById("feed").value;
+
+document.getElementById("result").innerHTML=
+"Name: "+n+"<br>Email: "+e+"<br>Feedback: "+f;
+
+document.getElementById("form").style.display="none";
+document.getElementById("display").style.display="block";
+}
+</script>
+
+</body>
+</html>
