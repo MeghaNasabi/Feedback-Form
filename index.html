@@ -1,33 +1,3421 @@
 <!DOCTYPE html>
-<html>
-<body style="background:yellow;text-align:center">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h2>Feedback Form</h2>
+<title>Bagalkot Heritage Tourism</title>
 
-<div id="form">
-<input id="name" placeholder="Enter Name"><br><br>
-<input id="email" placeholder="Enter Email"><br><br>
-<textarea id="feed" placeholder="Enter Feedback"></textarea><br><br>
-<button onclick="submitForm()">Submit</button>
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#172033;
+    line-height:1.7;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:9999;
+    background:#071b35;
+    color:white;
+    padding:12px 4%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    box-shadow:0 5px 25px rgba(0,0,0,.25);
+}
+
+.logo{
+    font-size:21px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+nav{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+
+nav button{
+    border:none;
+    color:white;
+    background:#173a65;
+    padding:9px 13px;
+    border-radius:22px;
+    font-weight:bold;
+}
+
+nav button:hover,
+nav button.active{
+    background:linear-gradient(135deg,#ffb300,#ff6335);
+}
+
+.page{
+    display:none;
+    min-height:80vh;
+}
+
+.page.active{
+    display:block;
+}
+
+.wrap{
+    width:min(1200px,92%);
+    margin:auto;
+}
+
+.section{
+    padding:65px 0;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.title h2{
+    font-size:38px;
+    color:#082b52;
+}
+
+.title p{
+    color:#667085;
+}
+
+/* HOME */
+
+.hero{
+    min-height:590px;
+    display:flex;
+    align-items:center;
+    padding:60px 6%;
+    color:white;
+
+    background:
+    linear-gradient(90deg,rgba(0,15,32,.92),rgba(0,15,32,.35)),
+    url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Panoramic%20view%20of%20Badami%20cave%20and%20Agastya%20lake.jpg")
+    center/cover;
+}
+
+.hero-content{
+    max-width:850px;
+}
+
+.hero h1{
+    font-size:clamp(45px,8vw,82px);
+    line-height:1.05;
+    margin:15px 0;
+}
+
+.hero p{
+    font-size:19px;
+    max-width:800px;
+}
+
+.hero-btn{
+    margin-top:25px;
+    border:none;
+    padding:15px 25px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#ffb300,#ff6335);
+    color:white;
+    font-weight:900;
+    font-size:16px;
+}
+
+/* FEATURED TOP */
+
+.feature-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.feature-card{
+    position:relative;
+    height:230px;
+    border-radius:24px;
+    overflow:hidden;
+    color:white;
+    box-shadow:0 12px 35px rgba(0,0,0,.18);
+}
+
+.feature-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.feature-card:hover img{
+    transform:scale(1.08);
+}
+
+.feature-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:22px;
+    background:linear-gradient(transparent,rgba(0,0,0,.85));
+}
+
+.feature-overlay h3{
+    font-size:25px;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid #e0e6ef;
+    box-shadow:0 12px 35px rgba(20,40,70,.12);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 20px 45px rgba(20,40,70,.2);
+}
+
+.card-image{
+    height:240px;
+    overflow:hidden;
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.card:hover .card-image img{
+    transform:scale(1.06);
+}
+
+.card-body{
+    padding:22px;
+}
+
+.card-body h3{
+    font-size:27px;
+    color:#082b52;
+}
+
+.badge{
+    display:inline-block;
+    background:#edf5ff;
+    color:#0756a5;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.btn{
+    border:none;
+    padding:11px 17px;
+    border-radius:13px;
+    background:#0a5eb5;
+    color:white;
+    font-weight:900;
+    margin-top:12px;
+}
+
+.btn:hover{
+    background:#ff8b00;
+}
+
+/* DETAIL */
+
+.detail{
+    display:none;
+    min-height:100vh;
+}
+
+.detail.active{
+    display:block;
+}
+
+.detail-hero{
+    min-height:430px;
+    display:flex;
+    align-items:flex-end;
+    color:white;
+    padding:50px 6%;
+
+    background:
+    linear-gradient(90deg,rgba(0,15,32,.9),rgba(0,15,32,.3)),
+    var(--hero) center/cover;
+}
+
+.detail-hero h1{
+    font-size:clamp(42px,7vw,72px);
+    line-height:1;
+}
+
+.detail-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.back-btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:13px;
+    background:white;
+    color:#082b52;
+    font-weight:900;
+}
+
+.close-btn{
+    background:#d62828;
+    color:white;
+}
+
+.history{
+    background:white;
+    margin:30px auto;
+    padding:30px;
+    border-radius:24px;
+    box-shadow:0 10px 35px rgba(20,40,70,.1);
+    border-left:7px solid #d89b2b;
+}
+
+.history h2{
+    color:#082b52;
+    margin-bottom:15px;
+}
+
+.history p{
+    text-align:justify;
+    font-size:17px;
+}
+
+/* ATTRACTION GALLERY */
+
+.attraction-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+}
+
+.attraction-card{
+    background:white;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 12px 35px rgba(20,40,70,.13);
+}
+
+.attraction-card img{
+    width:100%;
+    height:330px;
+    object-fit:cover;
+    display:block;
+}
+
+.attraction-info{
+    padding:23px;
+}
+
+.attraction-info h3{
+    color:#082b52;
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.attraction-info p{
+    text-align:justify;
+    color:#465267;
+}
+
+/* LOCATION */
+
+.location-box{
+    background:linear-gradient(135deg,#fff7df,#eef7ff);
+    padding:30px;
+    margin:30px auto;
+    border-radius:24px;
+    text-align:center;
+}
+
+.location-box h2{
+    color:#082b52;
+}
+
+.location-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:13px 23px;
+    background:#0a5eb5;
+    color:white;
+    border-radius:13px;
+    font-weight:900;
+}
+
+/* WIKI */
+
+.wiki-box{
+    background:#071b35;
+    color:white;
+    padding:35px;
+    border-radius:24px;
+    margin:35px auto;
+    text-align:center;
+}
+
+.wiki-box h2{
+    color:#ffd36b;
+}
+
+.wiki-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:13px 23px;
+    background:white;
+    color:#082b52;
+    border-radius:13px;
+    font-weight:900;
+}
+
+/* FORMS */
+
+.form-box{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 12px 35px rgba(20,40,70,.12);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.form-group{
+    margin-bottom:17px;
+}
+
+label{
+    display:block;
+    font-weight:800;
+    color:#082b52;
+    margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #ccd6e2;
+    border-radius:11px;
+    font-size:15px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.room-box{
+    display:flex;
+    gap:12px;
+}
+
+.room-option{
+    flex:1;
+    border:2px solid #dbe4ee;
+    padding:14px;
+    border-radius:14px;
+    cursor:pointer;
+}
+
+.room-option input{
+    width:auto;
+}
+
+.room-option:has(input:checked){
+    border-color:#0a5eb5;
+    background:#eef7ff;
+}
+
+.submit-btn{
+    border:none;
+    padding:14px 24px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#0a5eb5,#082b52);
+    color:white;
+    font-weight:900;
+    font-size:16px;
+}
+
+.success{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    background:#e9fff0;
+    border:2px solid #45a960;
+    border-radius:16px;
+    color:#145c29;
+}
+
+.success.show{
+    display:block;
+}
+
+/* BOOKING */
+
+.booking-total{
+    background:#071b35;
+    color:white;
+    padding:20px;
+    border-radius:18px;
+    margin:15px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.booking-total strong{
+    color:#ffd36b;
+    font-size:28px;
+}
+
+.booking{
+    background:#f7fbff;
+    border:1px solid #dbe7f2;
+    padding:20px;
+    border-radius:18px;
+    margin-bottom:15px;
+}
+
+.booking h3{
+    color:#082b52;
+}
+
+.cancel{
+    border:none;
+    background:#d62828;
+    color:white;
+    padding:9px 14px;
+    border-radius:10px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+/* HOTEL */
+
+.hotel-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.hotel{
+    background:white;
+    padding:25px;
+    border-radius:23px;
+    box-shadow:0 10px 30px rgba(20,40,70,.12);
+}
+
+.hotel h3{
+    color:#082b52;
+    font-size:23px;
+}
+
+.hotel-rate{
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+    background:#f4f8fc;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* INFO */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.info-card{
+    background:white;
+    padding:28px;
+    border-radius:23px;
+    box-shadow:0 10px 30px rgba(20,40,70,.1);
+}
+
+.info-card h3{
+    color:#082b52;
+}
+
+/* FOOTER */
+
+footer{
+    background:#071b35;
+    color:white;
+    text-align:center;
+    padding:35px;
+    margin-top:50px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+.feature-row,
+.grid,
+.hotel-grid{
+    grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:650px){
+
+header{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+nav{
+    justify-content:flex-start;
+}
+
+.feature-row,
+.grid,
+.hotel-grid,
+.form-grid,
+.attraction-grid,
+.info-grid{
+    grid-template-columns:1fr;
+}
+
+.hero{
+    min-height:550px;
+}
+
+.hero h1{
+    font-size:48px;
+}
+
+.attraction-card img{
+    height:250px;
+}
+
+.booking-total{
+    gap:10px;
+}
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<div class="logo">
+🏛️ Bagalkot Heritage Tourism
 </div>
 
-<div id="display" style="display:none">
-<h2>Feedback Submitted</h2>
-<p id="result"></p>
+<nav>
+
+<button class="nav-btn active"
+onclick="showPage('home',this)">
+🏠 Home
+</button>
+
+<button class="nav-btn"
+onclick="showPage('destinations',this)">
+📍 Destinations
+</button>
+
+<button class="nav-btn"
+onclick="showPage('register',this)">
+📝 Register
+</button>
+
+<button class="nav-btn"
+onclick="showPage('booking',this)">
+🎫 Booking
+</button>
+
+<button class="nav-btn"
+onclick="showPage('hotels',this)">
+🏨 Hotels
+</button>
+
+<button class="nav-btn"
+onclick="showPage('about',this)">
+ℹ️ About
+</button>
+
+</nav>
+
+</header>
+
+
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+
+<div class="hero-content">
+
+<span class="badge">
+✨ BAGALKOT HERITAGE
+</span>
+
+<h1>
+Discover<br>
+Bagalkot
+</h1>
+
+<p>
+Explore ancient Chalukyan architecture, historic temples,
+rock-cut caves, sacred places, rivers, dams, traditional crafts
+and the cultural heritage of Bagalkot district.
+</p>
+
+<button class="hero-btn"
+onclick="showPage('destinations')">
+🏛️ EXPLORE DESTINATIONS
+</button>
+
 </div>
+
+</div>
+
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>✨ Featured Heritage</h2>
+
+<p>
+Start your journey with Bagalkot's famous heritage destinations
+</p>
+
+</div>
+
+
+<div class="feature-row">
+
+
+<div class="feature-card">
+
+<img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Panoramic%20view%20of%20Badami%20cave%20and%20Agastya%20lake.jpg">
+
+<div class="feature-overlay">
+
+<h3>🏛️ Badami</h3>
+
+<p>Rock-cut cave temples</p>
+
+</div>
+
+</div>
+
+
+<div class="feature-card">
+
+<img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Durga%20Temple%20Aihole.jpg">
+
+<div class="feature-overlay">
+
+<h3>🛕 Aihole</h3>
+
+<p>Cradle of Indian architecture</p>
+
+</div>
+
+</div>
+
+
+<div class="feature-card">
+
+<img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Pattadakal%20Temple%20Complex.jpg">
+
+<div class="feature-overlay">
+
+<h3>🏛️ Pattadakal</h3>
+
+<p>Chalukyan temple complex</p>
+
+</div>
+
+</div>
+
+
+<div class="feature-card">
+
+<img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Almatti%20Dam%2020.jpg">
+
+<div class="feature-overlay">
+
+<h3>🌊 Almatti</h3>
+
+<p>Dam and scenic landscape</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>🌟 Why Visit Bagalkot?</h2>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<div class="card-body">
+
+<h3>🏛️ Heritage</h3>
+
+<p>
+Discover ancient temples, monuments, caves and
+architectural masterpieces connected with the Chalukyan heritage.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-body">
+
+<h3>🌊 Nature</h3>
+
+<p>
+Experience lakes, rivers, dams, gardens and beautiful
+natural landscapes across Bagalkot district.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-body">
+
+<h3>🧵 Culture</h3>
+
+<p>
+Experience local traditions, food, temples, festivals
+and the traditional Guledgudd textile heritage.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- DESTINATIONS -->
+
+<section id="destinations" class="page">
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>📍 Bagalkot Destinations</h2>
+
+<p>
+Click Explore to see photographs, exact attraction names,
+history, location and additional information.
+</p>
+
+</div>
+
+<div class="grid" id="destinationCards"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- DETAIL -->
+
+<section id="details" class="detail"></section>
+
+
+
+<!-- REGISTER -->
+
+<section id="register" class="page">
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>📝 Visitor Registration</h2>
+
+<p>
+Enter your visitor and accommodation details.
+</p>
+
+</div>
+
+
+<div class="form-box">
+
+<form id="registerForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>👤 Full Name</label>
+
+<input
+id="regName"
+required
+placeholder="Enter full name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>📱 Mobile Number</label>
+
+<input
+id="regMobile"
+required
+type="tel"
+pattern="[0-9]{10}"
+maxlength="10"
+placeholder="10 digit mobile number">
+
+</div>
+
+
+<div class="form-group">
+
+<label>📧 Email</label>
+
+<input
+id="regEmail"
+type="email"
+placeholder="Email address">
+
+</div>
+
+
+<div class="form-group">
+
+<label>👥 Number of Visitors</label>
+
+<input
+id="regVisitors"
+type="number"
+min="1"
+value="1">
+
+</div>
+
+
+</div>
+
+
+<div class="form-group">
+
+<label>🏠 Address</label>
+
+<textarea
+id="regAddress"
+rows="3"
+placeholder="Enter address"></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>🏨 Hotel</label>
+
+<select id="regHotel">
+
+<option value="No Hotel">
+No Hotel
+</option>
+
+<option>
+Hotel Mayura Chalukya KSTDC
+</option>
+
+<option>
+Hotel Grand Heritage
+</option>
+
+<option>
+The Heritage Resort, Badami
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>🛏️ Room Type</label>
+
+<div class="room-box">
+
+<label class="room-option">
+
+<input
+type="radio"
+name="regRoom"
+value="AC"
+checked>
+
+❄️ AC Room
+
+</label>
+
+
+<label class="room-option">
+
+<input
+type="radio"
+name="regRoom"
+value="Non-AC">
+
+🛏️ Non-AC Room
+
+</label>
+
+</div>
+
+</div>
+
+
+<button
+class="submit-btn"
+type="submit">
+
+✅ Complete Registration
+
+</button>
+
+</form>
+
+
+<div
+id="registerSuccess"
+class="success">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- BOOKING -->
+
+<section id="booking" class="page">
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>🎫 Heritage Tour Booking</h2>
+
+<p>
+Plan your destination, hotel, room and guide.
+</p>
+
+</div>
+
+
+<div class="form-box">
+
+<form id="bookingForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>👤 Visitor Name</label>
+
+<input
+id="visitorName"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>📱 Mobile Number</label>
+
+<input
+id="visitorMobile"
+required
+type="tel"
+pattern="[0-9]{10}"
+maxlength="10">
+
+</div>
+
+
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>📍 Destination</label>
+
+<select
+id="destinationSelect"
+required>
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>👥 Visitors</label>
+
+<input
+id="visitorCount"
+type="number"
+min="1"
+value="1"
+required>
+
+</div>
+
+
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>🏨 Hotel</label>
+
+<select id="hotelSelect">
+
+<option
+value="None"
+data-ac="0"
+data-nonac="0">
+
+No Hotel — Day Visit
+
+</option>
+
+<option
+value="Hotel Mayura Chalukya KSTDC"
+data-ac="2500"
+data-nonac="1600">
+
+Hotel Mayura Chalukya KSTDC
+
+</option>
+
+<option
+value="Hotel Grand Heritage"
+data-ac="2200"
+data-nonac="1400">
+
+Hotel Grand Heritage
+
+</option>
+
+<option
+value="The Heritage Resort, Badami"
+data-ac="2800"
+data-nonac="1800">
+
+The Heritage Resort, Badami
+
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>🛏️ Room Type</label>
+
+<div class="room-box">
+
+<label class="room-option">
+
+<input
+type="radio"
+name="room"
+value="AC"
+checked>
+
+❄️ AC
+
+</label>
+
+
+<label class="room-option">
+
+<input
+type="radio"
+name="room"
+value="Non-AC">
+
+🛏️ Non-AC
+
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>🌙 Nights</label>
+
+<input
+id="hotelNights"
+type="number"
+min="1"
+value="1">
+
+</div>
+
+
+<div class="form-group">
+
+<label>🧭 Guide</label>
+
+<select id="guideType">
+
+<option
+value="No Guide"
+data-price="0">
+
+No Guide — ₹0
+
+</option>
+
+<option
+value="Local Traveler Guide"
+data-price="300">
+
+Local Traveler Guide — ₹300/person
+
+</option>
+
+<option
+value="Heritage Guide"
+data-price="500">
+
+Heritage Guide — ₹500/person
+
+</option>
+
+<option
+value="Full-Day Guide"
+data-price="800">
+
+Full-Day Guide — ₹800/person
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>📅 Visit Date</label>
+
+<input
+id="visitDate"
+type="date"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>📝 Special Request</label>
+
+<input
+id="bookingMessage"
+placeholder="Any request">
+
+</div>
+
+</div>
+
+
+<div class="booking-total">
+
+<span>💰 Total Amount</span>
+
+<strong id="totalAmount">
+₹500
+</strong>
+
+</div>
+
+
+<button
+class="submit-btn"
+type="submit">
+
+🎫 Confirm Booking
+
+</button>
+
+</form>
+
+
+<div
+id="bookingSuccess"
+class="success">
+</div>
+
+
+<div style="margin-top:40px">
+
+<div class="title">
+
+<h2>📋 Booking History</h2>
+
+</div>
+
+<div id="bookingList"></div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- HOTELS -->
+
+<section id="hotels" class="page">
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>🏨 Hotels</h2>
+
+<p>
+Choose your preferred accommodation.
+</p>
+
+</div>
+
+
+<div class="hotel-grid">
+
+
+<div class="hotel">
+
+<div style="font-size:45px">
+🏨
+</div>
+
+<h3>
+Hotel Mayura Chalukya KSTDC
+</h3>
+
+<div class="hotel-rate">
+<span>❄️ AC</span>
+<b>₹2500/night</b>
+</div>
+
+<div class="hotel-rate">
+<span>🛏️ Non-AC</span>
+<b>₹1600/night</b>
+</div>
+
+<button
+class="btn"
+onclick="selectHotel('Hotel Mayura Chalukya KSTDC')">
+
+🎫 Book
+
+</button>
+
+</div>
+
+
+<div class="hotel">
+
+<div style="font-size:45px">
+🏨
+</div>
+
+<h3>
+Hotel Grand Heritage
+</h3>
+
+<div class="hotel-rate">
+<span>❄️ AC</span>
+<b>₹2200/night</b>
+</div>
+
+<div class="hotel-rate">
+<span>🛏️ Non-AC</span>
+<b>₹1400/night</b>
+</div>
+
+<button
+class="btn"
+onclick="selectHotel('Hotel Grand Heritage')">
+
+🎫 Book
+
+</button>
+
+</div>
+
+
+<div class="hotel">
+
+<div style="font-size:45px">
+🏨
+</div>
+
+<h3>
+The Heritage Resort, Badami
+</h3>
+
+<div class="hotel-rate">
+<span>❄️ AC</span>
+<b>₹2800/night</b>
+</div>
+
+<div class="hotel-rate">
+<span>🛏️ Non-AC</span>
+<b>₹1800/night</b>
+</div>
+
+<button
+class="btn"
+onclick="selectHotel('The Heritage Resort, Badami')">
+
+🎫 Book
+
+</button>
+
+</div>
+
+
+</div>
+
+
+<div class="history">
+
+<h2>🍛 Food & Guide</h2>
+
+<p>
+
+<strong>🧭 Local Traveler Guide:</strong> ₹300/person
+<br>
+
+<strong>🏛️ Heritage Guide:</strong> ₹500/person
+<br>
+
+<strong>🌞 Full-Day Guide:</strong> ₹800/person
+<br>
+
+<strong>🚶 No Guide:</strong> ₹0
+
+</p>
+
+<br>
+
+<p>
+
+Visitors can also experience traditional North Karnataka food,
+local dishes, temple prasada and village food traditions during
+their journey.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ABOUT -->
+
+<section id="about" class="page">
+
+<div class="section">
+
+<div class="wrap">
+
+<div class="title">
+
+<h2>ℹ️ About Bagalkot Heritage Tourism</h2>
+
+</div>
+
+
+<div class="history">
+
+<h2>🏛️ Our Heritage Journey</h2>
+
+<p>
+
+Bagalkot Heritage Tourism is a digital tourism application created
+to bring the historical, cultural, architectural and natural
+attractions of Bagalkot district into one easy-to-use platform.
+Visitors can explore important destinations, view photographs,
+read information about individual attractions, locate places on
+Google Maps and plan their visit using the registration and booking
+features.
+
+</p>
+
+<br>
+
+<p>
+
+The application includes Badami, Aihole, Pattadakal, Mahakuta,
+Kudalasangama, Almatti, Chikkasangama, Banashankari, Muchkandi
+and Guledgudd. Together these destinations represent ancient
+architecture, temples, rock-cut caves, sacred places, rivers,
+dams, lakes, traditional crafts and local culture.
+
+</p>
+
+</div>
+
+
+<div class="info-grid">
+
+
+<div class="info-card">
+
+<h3>🏛️ Heritage</h3>
+
+<p>
+Ancient temples, monuments, caves and Chalukyan architecture.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🌊 Nature</h3>
+
+<p>
+Rivers, lakes, dams, gardens and scenic landscapes.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🧵 Culture</h3>
+
+<p>
+Traditional crafts, local food, temples and village culture.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🗺️ Location</h3>
+
+<p>
+Every destination provides a Google Maps location button.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<footer>
+
+<p>
+🏛️ <b>Bagalkot Heritage Tourism</b>
+</p>
+
+<p>
+✨ Explore • Experience • Preserve Heritage ✨
+</p>
+
+</footer>
+
+
 
 <script>
-function submitForm(){
-let n=document.getElementById("name").value;
-let e=document.getElementById("email").value;
-let f=document.getElementById("feed").value;
 
-document.getElementById("result").innerHTML=
-"Name: "+n+"<br>Email: "+e+"<br>Feedback: "+f;
 
-document.getElementById("form").style.display="none";
-document.getElementById("display").style.display="block";
+/* ==========================================================
+DESTINATION DATA
+========================================================== */
+
+const destinations = [
+
+/* BADAMI */
+
+{
+name:"Badami",
+icon:"🏛️",
+price:500,
+time:"6:00 AM – 6:00 PM",
+location:"Badami Cave Temples, Bagalkot, Karnataka",
+
+hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Panoramic%20view%20of%20Badami%20cave%20and%20Agastya%20lake.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Badami",
+
+history:`
+
+Badami, historically known as Vatapi, was the capital of the
+Early Chalukyas and is one of the most important heritage centres
+of northern Karnataka. The town is surrounded by dramatic red
+sandstone cliffs and the Agastya Lake. The famous rock-cut caves
+were carved into the sandstone hills and contain sculptures
+associated with Hindu and Jain traditions. The wider Badami
+landscape also includes the Agastya Lake, Bhutanatha temples,
+fortifications and structural temples. The four caves represent
+an important stage in the development of Deccan rock-cut
+architecture and demonstrate the artistic achievements of the
+Chalukyan period.
+
+`,
+
+attractions:[
+
+{
+name:"Badami Cave 1",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rock%20cut%20cave1.jpg",
+text:`
+Badami Cave 1 is the oldest of the four famous rock-cut caves.
+It is dedicated primarily to Shiva and is especially known for
+the large Nataraja sculpture showing Shiva with multiple arms
+and dynamic dance poses. The cave demonstrates the early
+Chalukyan experimentation with sculptural art and rock-cut
+temple design.
+`
+},
+
+{
+name:"Badami Cave 2",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rock%20cut%20cave2.jpg",
+text:`
+Badami Cave 2 is associated mainly with Vishnu and contains
+important sculptural representations. Its pillars, verandah,
+ceiling and carved figures demonstrate the development of
+Chalukyan cave architecture. The cave is located above Cave 1
+along the stepped pathway of the sandstone cliff.
+`
+},
+
+{
+name:"Badami Cave 3",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rock%20cut%20cave3.jpg",
+text:`
+Badami Cave 3 is the largest and one of the most elaborate
+of the four caves. It contains large sculptural panels,
+decorated pillars and representations associated with Vishnu
+and other Hindu traditions. The cave is especially important
+for understanding the artistic achievements of the Early
+Chalukyan period.
+`
+},
+
+{
+name:"Badami Cave 4",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Rock%20cut%20cave4.jpg",
+text:`
+Badami Cave 4 is the smallest and latest of the four caves and
+is associated with Jainism. Sculptures of Jain Tirthankaras and
+other Jain figures can be found within the cave. Its location
+east of Cave 3 makes it the final cave in the main cave sequence.
+`
+},
+
+{
+name:"Agastya Lake",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Panoramic%20view%20of%20Badami%20cave%20and%20Agastya%20lake.jpg",
+text:`
+Agastya Lake lies below the sandstone cliffs and caves of Badami.
+The water body forms an important part of the historic landscape.
+The lake is surrounded by temples and cliffs and provides the
+distinctive view for which Badami is widely recognised.
+`
+},
+
+{
+name:"Bhutanatha Temples",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bhutanatha%20temple%20Badami.jpg",
+text:`
+The Bhutanatha temples stand near the eastern side of Agastya
+Lake. The temples are associated with Shiva and create a strong
+visual connection between the lake, sandstone hills and historic
+architecture of Badami.
+`
 }
+
+]
+},
+
+
+/* AIHOLE */
+
+{
+name:"Aihole",
+icon:"🛕",
+price:400,
+time:"6:00 AM – 6:00 PM",
+location:"Aihole, Bagalkot, Karnataka",
+
+hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Durga%20Temple%20Aihole.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Aihole",
+
+history:`
+
+Aihole is an ancient temple centre in the Malaprabha river
+valley and is famous for its large collection of early Chalukyan
+monuments. It contains more than a hundred temples and monuments
+representing different stages of architectural experimentation.
+The town is especially important because several different temple
+plans and styles were developed here before later forms became
+more established at Pattadakal. The Durga Temple, Lad Khan Temple,
+Meguti Jain Temple and Ravana Phadi Cave are among the best-known
+monuments.
+
+`,
+
+attractions:[
+
+{
+name:"Durga Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Durga%20Temple%20Aihole.jpg",
+text:`
+The Durga Temple is one of Aihole's most recognisable monuments.
+Its distinctive apsidal plan and surrounding gallery give it a
+unique appearance. The monument demonstrates the architectural
+experimentation that makes Aihole important in the history of
+Indian temple architecture.
+`
+},
+
+{
+name:"Lad Khan Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Lad%20Khan%20Temple%20Aihole.jpg",
+text:`
+The Lad Khan Temple is one of the earliest structural temples at
+Aihole. Its arrangement of stone pillars, roof slabs and halls
+shows the experimental character of early Chalukyan architecture.
+`
+},
+
+{
+name:"Meguti Jain Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Meguti%20Jain%20temple%20Aihole.jpg",
+text:`
+The Meguti Jain Temple stands on a raised hill and is an important
+Jain monument of Aihole. An inscription connected with the Early
+Chalukyan period makes the site especially valuable for historical
+study.
+`
+},
+
+{
+name:"Ravana Phadi Cave",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Ravana_phadi_cave_temple._Aihole.jpg",
+text:`
+Ravana Phadi is an early rock-cut cave temple containing important
+sculptural panels. Shiva, Parvati and other figures appear among
+the carved forms, showing the development of rock-cut architecture
+in the region.
+`
+},
+
+{
+name:"Huchappayya Matha",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Huchappayya_Matha_Aihole.jpg",
+text:`
+Huchappayya Matha is another historic monument within Aihole's
+large architectural landscape. Its structure contributes to the
+wide variety of temple forms found across the settlement.
+`
+},
+
+{
+name:"Archaeological Museum, Aihole",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Aihole_museum.jpg",
+text:`
+The Archaeological Museum preserves sculptures, architectural
+fragments and other archaeological material connected with the
+heritage of Aihole and the surrounding region.
+`
+}
+
+]
+},
+
+
+/* PATTADAKAL */
+
+{
+name:"Pattadakal",
+icon:"🏛️",
+price:450,
+time:"6:00 AM – 6:00 PM",
+location:"Pattadakal, Bagalkot, Karnataka",
+
+hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Pattadakal%20Temple%20Complex.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Pattadakal",
+
+history:`
+
+Pattadakal is a UNESCO World Heritage Site on the banks of the
+Malaprabha River and represents one of the highest achievements
+of Chalukyan temple architecture. The complex contains temples
+built in both northern Nagara and southern Dravidian traditions,
+along with structures that combine architectural elements from
+different traditions. Pattadakal served as an important royal
+ceremonial centre and contains a group of major temples including
+Virupaksha, Mallikarjuna, Sangameshwara, Papanatha and Galaganatha.
+
+`,
+
+attractions:[
+
+{
+name:"Virupaksha Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Virupaksha%20temple%20at%20Pattadakal.jpg",
+text:`
+The Virupaksha Temple is the largest and one of the most famous
+temples at Pattadakal. Its richly carved walls, pillars and
+sculptural panels demonstrate the high level of Chalukyan
+architectural and artistic achievement.
+`
+},
+
+{
+name:"Mallikarjuna Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Mallikarjuna%20Temple%20Pattadakal.jpg",
+text:`
+The Mallikarjuna Temple was built in the 8th century and is
+closely related in design to the Virupaksha Temple. Its detailed
+pillared halls and sculptural panels provide important examples
+of early Chalukyan temple art.
+`
+},
+
+{
+name:"Papanatha Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Papanatha%20temple%20at%20Pattadakal.jpg",
+text:`
+The Papanatha Temple is known for its combination of architectural
+features and richly carved interior. Its sixteen-pillared hall
+and detailed ceiling are important features of the monument.
+`
+},
+
+{
+name:"Galaganatha Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Galaganatha_temple_Pattadakal.jpg",
+text:`
+The Galaganatha Temple is one of the Pattadakal monuments showing
+the Nagara architectural tradition. Its curving tower and Shiva
+iconography make it architecturally distinctive within the temple
+complex.
+`
+},
+
+{
+name:"Sangameshwara Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Sangameshwara_Temple_Pattadakal.jpg",
+text:`
+Sangameshwara Temple is one of the early temples at Pattadakal.
+It is associated with the reign of King Vijayaditya and represents
+an important stage in the development of Chalukyan structural
+temple architecture.
+`
+},
+
+{
+name:"Jain Narayana Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Jain_Narayan_Temple_Pattadakal.jpg",
+text:`
+The Jain Narayana Temple represents the Jain architectural
+tradition at Pattadakal and shows that the monument complex
+contained both Hindu and Jain religious structures.
+`
+}
+
+]
+},
+
+
+/* MAHAKUTA */
+
+{
+name:"Mahakuta",
+icon:"🛕",
+price:300,
+time:"6:00 AM – 8:00 PM",
+location:"Mahakuta, Bagalkot, Karnataka",
+
+hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Mahakuta%20group%20of%20temples1%20at%20Mahakuta.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Mahakuta",
+
+history:`
+
+Mahakuta is an important historic temple centre located near
+Badami. The complex is associated mainly with Shaiva worship and
+contains a group of temples surrounding sacred water sources.
+Mahakuteshwara Temple is the principal monument, while the
+surrounding shrines and water tanks contribute to the religious
+and architectural character of the site. The temple complex
+preserves architectural features connected with the Chalukyan
+period and remains an important pilgrimage and heritage destination.
+
+`,
+
+attractions:[
+
+{
+name:"Mahakuteshwara Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Mahakuta%20group%20of%20temples1%20at%20Mahakuta.jpg",
+text:`
+Mahakuteshwara Temple is the principal temple of the Mahakuta
+complex. Dedicated to Shiva, it displays early Chalukyan
+architectural features and detailed sculptural decoration.
+`
+},
+
+{
+name:"Vishnu Pushkarini",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Vishnu%20Tank.jpg",
+text:`
+The sacred water tank is an important feature of the Mahakuta
+temple complex. Water has an important religious role at the
+site and the tank forms part of the traditional temple landscape.
+`
+},
+
+{
+name:"Mahakuta Temple Group",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/White%20temple%2C%20mahakuta%20complex.jpg",
+text:`
+The Mahakuta temple group contains several smaller shrines and
+structures surrounding the main temple. Together they demonstrate
+the architectural variety of this historic religious centre.
+`
+}
+
+]
+},
+
+
+/* KUDALASANGAMA */
+
+{
+name:"Kudalasangama",
+icon:"🛕",
+price:350,
+time:"6:00 AM – 1:00 PM & 3:00 PM – 8:00 PM",
+location:"Kudalasangama, Bagalkot, Karnataka",
+
+hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Kudalasangama.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Kudalasangama",
+
+history:`
+
+Kudalasangama is an important religious and cultural centre
+associated with Basavanna and the Lingayat tradition. The site
+is located near the meeting of rivers and contains the
+Sangameshwara Temple and the Aikya Mantapa. The combination of
+river landscape, temple architecture and cultural history makes
+Kudalasangama an important pilgrimage and heritage destination.
+
+`,
+
+attractions:[
+
+{
+name:"Sangameshwara Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Shri%20Sangameshwara%20Temple.JPG",
+text:`
+Sangameshwara Temple is one of the principal religious attractions
+at Kudalasangama. Its sacred setting near the river landscape
+makes it an important part of the cultural identity of the site.
+`
+},
+
+{
+name:"Aikya Mantapa",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Way%20to%20Aikya%20Mantapa.jpg",
+text:`
+The Aikya Mantapa is associated with Basavanna and is an important
+cultural and religious memorial at Kudalasangama. Visitors reach
+the structure through the surrounding pilgrimage landscape.
+`
+},
+
+{
+name:"Krishna–Malaprabha River Landscape",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Kudalasangama.jpg",
+text:`
+The river landscape surrounding Kudalasangama is an important
+natural feature of the destination. The meeting of rivers has
+contributed to the religious significance of the area.
+`
+}
+
+]
+},
+
+
+/* ALMATTI */
+
+{
+name:"Almatti",
+icon:"🌊",
+price:300,
+time:"6:00 AM – 1:00 PM & 4:00 PM – 6:00 PM",
+location:"Almatti Dam, Bagalkot, Karnataka",
+
+hero:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Almatti%20Dam%2020.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Almatti_Dam",
+
+history:`
+
+Almatti is known for the Almatti Dam and the large reservoir
+formed across the Krishna River. The destination combines
+engineering, water resources, gardens and scenic landscapes.
+Krishna Garden is one of the attractions associated with the
+dam area. The reservoir and surrounding scenery make Almatti an
+important natural and recreational destination in Bagalkot district.
+
+`,
+
+attractions:[
+
+{
+name:"Almatti Dam",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Almatti%20Dam%2020.jpg",
+text:`
+Almatti Dam is the central attraction of the destination. The
+large structure across the Krishna River forms an extensive
+reservoir and is an important part of the region's water-resource
+infrastructure.
+`
+},
+
+{
+name:"Krishna Garden",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Another%20view%20of%20Krishna%20Garden%20at%20Almatti%20dam.JPG",
+text:`
+Krishna Garden provides landscaped surroundings near Almatti Dam.
+The garden and nearby viewpoints offer visitors recreational
+spaces and scenic views of the reservoir area.
+`
+},
+
+{
+name:"Almatti Reservoir",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Upstream%20view%20of%20dam%20and%20reservoir%20-%20Almatti%20dam.JPG",
+text:`
+The Almatti reservoir creates a large water landscape around the
+dam. The upstream view shows the scale of the reservoir and its
+relationship with the surrounding countryside.
+`
+}
+
+]
+},
+
+
+/* CHIKKASANGAMA */
+
+{
+name:"Chikkasangama",
+icon:"🌊",
+price:300,
+time:"5:00 AM – 8:00 PM",
+location:"Chikkasangama, Bagalkot, Karnataka",
+
+hero:"https://cdn.s3waas.gov.in/s3a1d33d0dfec820b41b54430b50e96b5c/uploads/2023/03/2023031637-1024x507.jpeg",
+
+wiki:"https://en.wikipedia.org/w/index.php?search=Chikkasangama+Bagalkot",
+
+history:`
+
+Chikkasangama is known for its river landscape and cultural
+importance. The meeting of rivers creates a distinctive natural
+environment and the surrounding area contains religious and
+scenic attractions. The destination provides visitors with a
+quieter experience and demonstrates the importance of rivers
+in the cultural geography of Bagalkot district.
+
+`,
+
+attractions:[
+
+{
+name:"Chikkasangama River View",
+image:"https://cdn.s3waas.gov.in/s3a1d33d0dfec820b41b54430b50e96b5c/uploads/2023/03/2023031637-1024x507.jpeg",
+text:`
+The river view at Chikkasangama shows the natural landscape
+around the meeting of rivers and provides a peaceful scenic
+experience.
+`
+},
+
+{
+name:"Chikkasangama Riverside Landscape",
+image:"https://cdn.s3waas.gov.in/s3a1d33d0dfec820b41b54430b50e96b5c/uploads/2023/03/2023031698-1024x538.jpeg",
+text:`
+The riverside landscape forms an important natural attraction
+and demonstrates the relationship between water, settlement
+and local cultural life.
+`
+},
+
+{
+name:"Chikkasangama Water Landscape",
+image:"https://cdn.s3waas.gov.in/s3a1d33d0dfec820b41b54430b50e96b5c/uploads/2023/03/2023031663-1024x286.jpeg",
+text:`
+The broad water landscape gives visitors a clear view of the
+natural environment around Chikkasangama.
+`
+},
+
+{
+name:"Chikkasangama Scenic View",
+image:"https://cdn.s3waas.gov.in/s3a1d33d0dfec820b41b54430b50e96b5c/uploads/2023/03/2023031675-1024x493.jpeg",
+text:`
+The scenic surroundings make Chikkasangama suitable for
+photography, peaceful visits and experiencing the river heritage
+of the region.
+`
+}
+
+]
+},
+
+
+/* BANASHANKARI */
+
+{
+name:"Banashankari",
+icon:"🛕",
+price:250,
+time:"6:00 AM – 1:00 PM & 3:00 PM – 9:00 PM",
+location:"Banashankari Temple, Badami, Karnataka",
+
+hero:"https://www.incredibleindia.gov.in/content/dam/incredible-india/images/trips/karnataka/bagalkote/bagalkote-blitz-explore-the-unseen/banashankari-temple-badami-karnataka-tri-iter-day2.jpg",
+
+wiki:"https://en.wikipedia.org/wiki/Banashankari_Amma_Temple",
+
+history:`
+
+Banashankari is an important temple destination near Badami
+dedicated to Goddess Banashankari. The temple complex contains
+a distinctive sacred tank and architectural features that have
+made it an important religious and cultural landmark. The temple
+is closely connected with the local traditions of the surrounding
+region and attracts devotees as well as visitors interested in
+heritage architecture.
+
+`,
+
+attractions:[
+
+{
+name:"Banashankari Temple",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Banashankari%20Temple.jpg",
+text:`
+Banashankari Temple is the principal religious attraction and
+is dedicated to Goddess Banashankari. The structure and courtyard
+represent the architectural and cultural character of the site.
+`
+},
+
+{
+name:"Banashankari Temple Tank",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Banashankari%20Temple%20tank.JPG",
+text:`
+The temple tank is an important visual and religious feature
+of the Banashankari complex and forms part of the historic
+temple environment.
+`
+},
+
+{
+name:"Banashankari Deepa Stambha",
+image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Courtyard%20of%20the%20Banashankari%20temple%20with%20ventilation%20towers%20or%20deepa%20stamba.JPG",
+text:`
+The deepa stambha and courtyard are distinctive features of the
+temple complex. They contribute to the visual character of the
+historic religious setting.
+`
+}
+
+]
+},
+
+
+/* MUCHKANDI */
+
+{
+name:"Muchkandi",
+icon:"🌅",
+price:250,
+time:"6:00 AM – 6:00 PM",
+location:"Muchkandi Lake, Bagalkot, Karnataka",
+
+hero:"https://imagesvs.oneindia.com/kn/img/2017/10/16-1508167478-bagalkotmuchakandilake3.jpg",
+
+wiki:"https://en.wikipedia.org/w/index.php?search=Muchkandi+Lake",
+
+history:`
+
+Muchkandi is known for its lake and scenic surroundings. The
+destination provides visitors with an opportunity to experience
+the natural landscape of Bagalkot away from the major monument
+complexes. The lake and sunset viewpoints create attractive
+locations for photography and peaceful recreation.
+
+`,
+
+attractions:[
+
+{
+name:"Muchkandi Lake",
+image:"https://imagesvs.oneindia.com/kn/img/2017/10/16-1508167478-bagalkotmuchakandilake3.jpg",
+text:`
+Muchkandi Lake is the main natural attraction of the area.
+The water body and surrounding landscape provide a peaceful
+environment for visitors.
+`
+},
+
+{
+name:"Muchkandi Sunset View Point",
+image:"https://files.yappe.in/place/full/muchkandi-sunset-view-point-muccknddi-suuryaastd-viikssnnaa-taann-9543235.webp",
+text:`
+The Muchkandi sunset viewpoint provides a wide scenic view and
+is especially attractive during the evening when the landscape
+is illuminated by the setting sun.
+`
+},
+
+{
+name:"Muchkandi Scenic View Point",
+image:"https://files.yappe.in/place/full/muchkandi-sunset-view-point-muccknddi-suuryaastd-viikssnnaa-taann-9543237.webp",
+text:`
+The scenic viewpoint gives visitors another perspective of the
+lake and surrounding landscape and is suitable for photography.
+`
+}
+
+]
+},
+
+
+/* GULEDGUDD */
+
+{
+name:"Guledgudd",
+icon:"🧵",
+price:200,
+time:"9:00 AM – 6:00 PM",
+location:"Guledgudd, Bagalkot, Karnataka",
+
+hero:"https://images.livemint.com/img/2022/06/03/original/Khanafabrics_1654223118729.jpg",
+
+wiki:null,
+
+history:`
+
+Guledgudd is particularly known for its traditional textile
+heritage and the famous Guledgudd Khana fabric. The craft is
+connected with local weaving traditions and represents an
+important part of the cultural and economic heritage of the
+town. The traditional textile is recognised for its distinctive
+designs and craftsmanship. Guledgudd adds a living craft and
+cultural dimension to the Bagalkot tourism experience.
+
+`,
+
+attractions:[
+
+{
+name:"Guledgudd Khana",
+image:"https://images.livemint.com/img/2022/06/03/original/Khanafabrics_1654223118729.jpg",
+text:`
+Guledgudd Khana is the traditional textile associated with the
+town. Its designs and weaving tradition represent the living
+handloom heritage of the region.
+`
+},
+
+{
+name:"Traditional Guledgudd Weaving",
+image:"https://media.newindianexpress.com/TNIE%2Fimport%2Fuploads%2Fuser%2Fckeditor_images%2Farticle%2F2021%2F10%2F31%2FDY_SJ.jpg",
+text:`
+Traditional weaving represents the craftsmanship and cultural
+knowledge passed through generations. The textile tradition
+continues to be an important cultural identity of Guledgudd.
+`
+}
+
+]
+}
+
+];
+
+
+
+/* ==========================================================
+CREATE DESTINATION CARDS
+========================================================== */
+
+const destinationCards=
+document.getElementById("destinationCards");
+
+destinations.forEach((d,index)=>{
+
+destinationCards.innerHTML+=`
+
+<div class="card">
+
+<div class="card-image">
+
+<img
+src="${d.hero}"
+alt="${d.name}">
+
+</div>
+
+<div class="card-body">
+
+<span class="badge">
+${d.icon} HERITAGE DESTINATION
+</span>
+
+<h3>${d.name}</h3>
+
+<p>
+${d.history.substring(0,210)}...
+</p>
+
+<p>
+🕐 <b>${d.time}</b>
+</p>
+
+<button
+class="btn"
+onclick="openDestination(${index})">
+
+🔎 EXPLORE ${d.name.toUpperCase()}
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+
+/* ==========================================================
+PAGE NAVIGATION
+========================================================== */
+
+function showPage(id,button){
+
+document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+});
+
+document.getElementById("details").classList.remove("active");
+
+const page=document.getElementById(id);
+
+if(page){
+    page.classList.add("active");
+}
+
+document.querySelectorAll(".nav-btn").forEach(b=>{
+    b.classList.remove("active");
+});
+
+if(button){
+    button.classList.add("active");
+}
+
+window.scrollTo({
+    top:0,
+    behavior:"smooth"
+});
+
+}
+
+
+
+/* ==========================================================
+OPEN DESTINATION
+========================================================== */
+
+function openDestination(index){
+
+const d=destinations[index];
+
+const detail=
+document.getElementById("details");
+
+
+let attractionHTML="";
+
+
+d.attractions.forEach((a)=>{
+
+attractionHTML+=`
+
+<div class="attraction-card">
+
+<img
+src="${a.image}"
+alt="${a.name}"
+onerror="this.parentElement.style.display='none'">
+
+<div class="attraction-info">
+
+<h3>
+${a.name}
+</h3>
+
+<p>
+${a.text}
+</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+let wikiHTML="";
+
+if(d.wiki){
+
+wikiHTML=`
+
+<div class="wiki-box">
+
+<h2>🌐 More Information</h2>
+
+<p>
+Read additional information about ${d.name}
+on Wikipedia.
+</p>
+
+<a
+class="wiki-btn"
+href="${d.wiki}"
+target="_blank">
+
+🌐 OPEN WIKIPEDIA
+
+</a>
+
+</div>
+
+`;
+
+}
+
+
+detail.innerHTML=`
+
+<div
+class="detail-hero"
+style="--hero:url('${d.hero}')">
+
+<div>
+
+<div class="detail-buttons">
+
+<button
+class="back-btn"
+onclick="closeDestination()">
+
+← BACK
+
+</button>
+
+<button
+class="back-btn close-btn"
+onclick="closeDestination()">
+
+✕ CLOSE
+
+</button>
+
+</div>
+
+<h1>
+${d.icon} ${d.name}
+</h1>
+
+<p>
+📍 ${d.location}
+</p>
+
+</div>
+
+</div>
+
+
+<div class="wrap">
+
+
+<div class="history">
+
+<h2>
+📖 History of ${d.name}
+</h2>
+
+<p>
+${d.history}
+</p>
+
+</div>
+
+
+<div class="location-box">
+
+<h2>
+📍 ${d.name} Location
+</h2>
+
+<p>
+Open the exact destination location in Google Maps.
+</p>
+
+<a
+class="location-btn"
+target="_blank"
+href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.location)}">
+
+📍 OPEN GOOGLE MAPS
+
+</a>
+
+</div>
+
+
+<div class="title">
+
+<h2>
+📸 ${d.name} Attractions
+</h2>
+
+<p>
+Each photograph below has the correct attraction name and
+its own description.
+</p>
+
+</div>
+
+
+<div class="attraction-grid">
+
+${attractionHTML}
+
+</div>
+
+
+<div class="history">
+
+<h2>
+🕐 Visitor Information
+</h2>
+
+<p>
+⏰ <b>Visiting Time:</b> ${d.time}
+</p>
+
+<br>
+
+<p>
+🎫 <b>Tour Package:</b> ₹${d.price} per person
+</p>
+
+</div>
+
+
+${wikiHTML}
+
+
+<div class="history" style="text-align:center">
+
+<h2>
+🎫 Plan Your Visit
+</h2>
+
+<button
+class="btn"
+onclick="bookDestination('${d.name}')">
+
+🎫 BOOK ${d.name.toUpperCase()}
+
+</button>
+
+<br>
+
+<button
+class="back-btn"
+onclick="closeDestination()">
+
+← BACK TO ALL DESTINATIONS
+
+</button>
+
+<button
+class="back-btn close-btn"
+onclick="closeDestination()">
+
+✕ CLOSE
+
+</button>
+
+</div>
+
+
+</div>
+
+`;
+
+
+document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+});
+
+detail.classList.add("active");
+
+window.scrollTo({
+    top:0,
+    behavior:"smooth"
+});
+
+}
+
+
+
+/* ==========================================================
+CLOSE DESTINATION
+========================================================== */
+
+function closeDestination(){
+
+document.getElementById("details")
+.classList.remove("active");
+
+showPage("destinations");
+
+}
+
+
+
+/* ==========================================================
+BOOK DESTINATION
+========================================================== */
+
+function bookDestination(name){
+
+showPage("booking");
+
+document.getElementById("destinationSelect").value=name;
+
+calculateTotal();
+
+window.scrollTo({
+    top:0,
+    behavior:"smooth"
+});
+
+}
+
+
+
+/* ==========================================================
+BOOKING DESTINATION OPTIONS
+========================================================== */
+
+const destinationSelect=
+document.getElementById("destinationSelect");
+
+destinations.forEach(d=>{
+
+destinationSelect.innerHTML+=`
+
+<option
+value="${d.name}"
+data-price="${d.price}"
+data-location="${d.location}">
+
+${d.name} — ₹${d.price}/person
+
+</option>
+
+`;
+
+});
+
+
+
+/* ==========================================================
+BOOKING CALCULATION
+========================================================== */
+
+function getRoom(){
+
+const room=
+document.querySelector(
+'input[name="room"]:checked'
+);
+
+return room ? room.value : "AC";
+
+}
+
+
+function hotelRate(){
+
+const hotel=
+document.getElementById("hotelSelect");
+
+const option=
+hotel.options[hotel.selectedIndex];
+
+if(hotel.value==="None"){
+    return 0;
+}
+
+return getRoom()==="AC"
+?Number(option.dataset.ac)
+:Number(option.dataset.nonac);
+
+}
+
+
+function guideRate(){
+
+const guide=
+document.getElementById("guideType");
+
+const option=
+guide.options[guide.selectedIndex];
+
+return Number(option.dataset.price||0);
+
+}
+
+
+function calculateTotal(){
+
+const option=
+destinationSelect.options[
+destinationSelect.selectedIndex
+];
+
+const visitors=
+Number(document.getElementById("visitorCount").value)||1;
+
+const nights=
+Number(document.getElementById("hotelNights").value)||1;
+
+const destinationPrice=
+Number(option.dataset.price||0);
+
+const hotel=
+document.getElementById("hotelSelect").value;
+
+const hotelCost=
+hotel==="None"
+?0
+:hotelRate()*nights;
+
+const guideCost=
+guideRate()*visitors;
+
+const total=
+(destinationPrice*visitors)+
+hotelCost+
+guideCost;
+
+document.getElementById("totalAmount")
+.innerText=
+"₹"+total.toLocaleString("en-IN");
+
+}
+
+
+document.getElementById("destinationSelect")
+.addEventListener("change",calculateTotal);
+
+document.getElementById("visitorCount")
+.addEventListener("input",calculateTotal);
+
+document.getElementById("hotelSelect")
+.addEventListener("change",calculateTotal);
+
+document.getElementById("hotelNights")
+.addEventListener("input",calculateTotal);
+
+document.getElementById("guideType")
+.addEventListener("change",calculateTotal);
+
+document.querySelectorAll(
+'input[name="room"]'
+).forEach(r=>{
+    r.addEventListener("change",calculateTotal);
+});
+
+
+
+/* ==========================================================
+HOTEL BOOK
+========================================================== */
+
+function selectHotel(hotel){
+
+showPage("booking");
+
+document.getElementById("hotelSelect").value=hotel;
+
+calculateTotal();
+
+window.scrollTo({
+    top:0,
+    behavior:"smooth"
+});
+
+}
+
+
+
+/* ==========================================================
+REGISTRATION
+========================================================== */
+
+document.getElementById("registerForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const room=
+document.querySelector(
+'input[name="regRoom"]:checked'
+).value;
+
+const registration={
+
+name:
+document.getElementById("regName").value,
+
+mobile:
+document.getElementById("regMobile").value,
+
+email:
+document.getElementById("regEmail").value,
+
+visitors:
+document.getElementById("regVisitors").value,
+
+address:
+document.getElementById("regAddress").value,
+
+hotel:
+document.getElementById("regHotel").value,
+
+room:room
+
+};
+
+localStorage.setItem(
+"bagalkotRegistration",
+JSON.stringify(registration)
+);
+
+
+document.getElementById("registerSuccess")
+.innerHTML=`
+
+<h3>
+🎉 Registration Successful!
+</h3>
+
+<p>
+
+👤 <b>Name:</b> ${registration.name}
+<br>
+
+📱 <b>Mobile:</b> ${registration.mobile}
+<br>
+
+📧 <b>Email:</b> ${registration.email || "Not provided"}
+<br>
+
+👥 <b>Visitors:</b> ${registration.visitors}
+<br>
+
+🏨 <b>Hotel:</b> ${registration.hotel}
+<br>
+
+🛏️ <b>Room:</b> ${registration.room}
+<br>
+
+🏠 <b>Address:</b> ${registration.address || "Not provided"}
+
+</p>
+
+`;
+
+document.getElementById("registerSuccess")
+.classList.add("show");
+
+});
+
+
+
+/* ==========================================================
+BOOKING SUBMIT
+========================================================== */
+
+document.getElementById("bookingForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const destination=
+document.getElementById("destinationSelect");
+
+const option=
+destination.options[destination.selectedIndex];
+
+const visitors=
+Number(
+document.getElementById("visitorCount").value
+);
+
+const nights=
+Number(
+document.getElementById("hotelNights").value
+);
+
+const hotel=
+document.getElementById("hotelSelect").value;
+
+const room=
+getRoom();
+
+const guide=
+document.getElementById("guideType").value;
+
+const destinationCost=
+Number(option.dataset.price)*visitors;
+
+const hotelCost=
+hotel==="None"
+?0
+:hotelRate()*nights;
+
+const guideCost=
+guideRate()*visitors;
+
+const total=
+destinationCost+
+hotelCost+
+guideCost;
+
+
+const booking={
+
+id:Date.now(),
+
+name:
+document.getElementById("visitorName").value,
+
+mobile:
+document.getElementById("visitorMobile").value,
+
+destination:
+destination.value,
+
+visitors:visitors,
+
+hotel:hotel,
+
+room:
+hotel==="None"
+?"No Room"
+:room,
+
+nights:
+hotel==="None"
+?0
+:nights,
+
+guide:guide,
+
+date:
+document.getElementById("visitDate").value,
+
+total:total,
+
+location:
+option.dataset.location
+
+};
+
+
+let bookings=
+JSON.parse(
+localStorage.getItem("bagalkotBookings")||"[]"
+);
+
+bookings.push(booking);
+
+localStorage.setItem(
+"bagalkotBookings",
+JSON.stringify(bookings)
+);
+
+
+document.getElementById("bookingSuccess")
+.innerHTML=`
+
+<h3>
+🎉 Booking Successfully Saved!
+</h3>
+
+<p>
+
+👤 <b>Name:</b> ${booking.name}
+<br>
+
+📱 <b>Mobile:</b> ${booking.mobile}
+<br>
+
+📍 <b>Destination:</b> ${booking.destination}
+<br>
+
+👥 <b>Visitors:</b> ${booking.visitors}
+<br>
+
+🏨 <b>Hotel:</b> ${booking.hotel}
+<br>
+
+🛏️ <b>Room:</b> ${booking.room}
+<br>
+
+🌙 <b>Nights:</b> ${booking.nights}
+<br>
+
+🧭 <b>Guide:</b> ${booking.guide}
+<br>
+
+📅 <b>Date:</b> ${booking.date}
+<br>
+
+💰 <b>Total:</b>
+₹${booking.total.toLocaleString("en-IN")}
+
+</p>
+
+`;
+
+document.getElementById("bookingSuccess")
+.classList.add("show");
+
+renderBookings();
+
+});
+
+
+
+/* ==========================================================
+BOOKING HISTORY
+========================================================== */
+
+function renderBookings(){
+
+const box=
+document.getElementById("bookingList");
+
+const bookings=
+JSON.parse(
+localStorage.getItem("bagalkotBookings")||"[]"
+);
+
+
+if(bookings.length===0){
+
+box.innerHTML=`
+
+<div class="history">
+
+<p style="text-align:center">
+
+📋 No bookings yet.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+box.innerHTML="";
+
+
+bookings.slice().reverse().forEach(b=>{
+
+const div=
+document.createElement("div");
+
+div.className="booking";
+
+div.innerHTML=`
+
+<h3>
+🎫 ${b.destination}
+</h3>
+
+<p>
+
+👤 <b>${b.name}</b>
+<br>
+
+📱 ${b.mobile}
+<br>
+
+👥 Visitors: ${b.visitors}
+<br>
+
+🏨 Hotel: ${b.hotel}
+<br>
+
+🛏️ Room: ${b.room}
+<br>
+
+🌙 Nights: ${b.nights}
+<br>
+
+🧭 Guide: ${b.guide}
+<br>
+
+📅 Date: ${b.date}
+<br>
+
+💰 <b>
+₹${b.total.toLocaleString("en-IN")}
+</b>
+
+</p>
+
+
+<a
+class="location-btn"
+target="_blank"
+href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.location)}">
+
+📍 Location
+
+</a>
+
+<br>
+
+<button
+class="cancel"
+onclick="cancelBooking(${b.id})">
+
+✕ Cancel Booking
+
+</button>
+
+`;
+
+box.appendChild(div);
+
+});
+
+}
+
+
+function cancelBooking(id){
+
+if(!confirm("Cancel this booking?")){
+    return;
+}
+
+let bookings=
+JSON.parse(
+localStorage.getItem("bagalkotBookings")||"[]"
+);
+
+bookings=
+bookings.filter(b=>b.id!==id);
+
+localStorage.setItem(
+"bagalkotBookings",
+JSON.stringify(bookings)
+);
+
+renderBookings();
+
+}
+
+
+
+/* ==========================================================
+DATE
+========================================================== */
+
+const today=
+new Date().toISOString().split("T")[0];
+
+document.getElementById("visitDate").min=today;
+
+
+
+/* ==========================================================
+LOAD OLD REGISTRATION
+========================================================== */
+
+const oldRegistration=
+JSON.parse(
+localStorage.getItem("bagalkotRegistration")||"null"
+);
+
+
+if(oldRegistration){
+
+document.getElementById("regName").value=
+oldRegistration.name||"";
+
+document.getElementById("regMobile").value=
+oldRegistration.mobile||"";
+
+document.getElementById("regEmail").value=
+oldRegistration.email||"";
+
+document.getElementById("regVisitors").value=
+oldRegistration.visitors||1;
+
+document.getElementById("regAddress").value=
+oldRegistration.address||"";
+
+document.getElementById("regHotel").value=
+oldRegistration.hotel||"No Hotel";
+
+
+if(oldRegistration.room){
+
+const r=
+document.querySelector(
+`input[name="regRoom"][value="${oldRegistration.room}"]`
+);
+
+if(r){
+    r.checked=true;
+}
+
+}
+
+}
+
+
+
+/* ==========================================================
+START
+========================================================== */
+
+renderBookings();
+
+calculateTotal();
+
 </script>
 
 </body>
